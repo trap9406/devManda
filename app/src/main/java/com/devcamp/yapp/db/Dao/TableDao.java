@@ -14,6 +14,9 @@ import com.devcamp.yapp.db.DB.DataSources;
 public class TableDao {
     public static SQLiteDatabase mDB;
 
+    public TableDao(SQLiteDatabase DB){
+        this.mDB = DB;
+    }
     public DataSources getData(String table, int id){
         DataSources temp= null;
         Cursor cursor = mDB.rawQuery("SELECT *FROM "+table+" WHERE id "+id+";",null);
@@ -26,14 +29,14 @@ public class TableDao {
         }
         temp.setId(cursor.getInt(0));
         temp.setMainText(cursor.getString(1));
-        temp.setSubText1(cursor.getString(2));
-        temp.setSubText2(cursor.getString(3));
-        temp.setSubText3(cursor.getString(4));
-        temp.setSubText4(cursor.getString(5));
-        temp.setSubText5(cursor.getString(6));
-        temp.setSubText6(cursor.getString(7));
-        temp.setSubText7(cursor.getString(8));
-        temp.setSubText8(cursor.getString(9));
+        temp.setSubText1(cursor.getString(3));
+        temp.setSubText2(cursor.getString(5));
+        temp.setSubText3(cursor.getString(7));
+        temp.setSubText4(cursor.getString(9));
+        temp.setSubText5(cursor.getString(11));
+        temp.setSubText6(cursor.getString(13));
+        temp.setSubText7(cursor.getString(15));
+        temp.setSubText8(cursor.getString(17));
 
         return temp;
     }
@@ -53,6 +56,7 @@ public class TableDao {
 
         mDB.insert(table, null, cv);
     }
+
 
     public Cursor getAllUser(String table) {
         Cursor all = mDB.query(table, null, null, null, null, null, null);

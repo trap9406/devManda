@@ -23,29 +23,41 @@ public class DBAdapter {
     private static final String DATABASE_NAME = "DATABASE.db";
     private int DATABASE_VERSION = 1;
 
-    private static final String MAIN_TABLE = "mainTable";
-    private static final String SUB_TABLE1 = "subTable";
-    private static final String SUB_TABLE2 = "subTable";
-    private static final String SUB_TABLE3 = "subTable";
-    private static final String SUB_TABLE4 = "subTable";
-    private static final String SUB_TABLE5 = "subTable";
-    private static final String SUB_TABLE6 = "subTable";
-    private static final String SUB_TABLE7 = "subTable";
-    private static final String SUB_TABLE8 = "subTable";
+    public static final String MAIN_TABLE = "mainTable";
+    public static final String SUB_TABLE1 = "subTable";
+    public static final String SUB_TABLE2 = "subTable";
+    public static final String SUB_TABLE3 = "subTable";
+    public static final String SUB_TABLE4 = "subTable";
+    public static final String SUB_TABLE5 = "subTable";
+    public static final String SUB_TABLE6 = "subTable";
+    public static final String SUB_TABLE7 = "subTable";
+    public static final String SUB_TABLE8 = "subTable";
 
     public static final String MAIN_OBJECT = "main_object";
+    public static final String MAIN_STATUS = "main_object_status";
     public static final String SUB_OBJECT1 = "sub_object1";
+    public static final String SUB1_STATUS = "sub_0bject1_status";
     public static final String SUB_OBJECT2 = "sub_object2";
+    public static final String SUB2_STATUS = "sub_0bject2_status";
     public static final String SUB_OBJECT3 = "sub_object3";
+    public static final String SUB3_STATUS = "sub_0bject3_status";
     public static final String SUB_OBJECT4 = "sub_object4";
+    public static final String SUB4_STATUS = "sub_0bject4_status";
     public static final String SUB_OBJECT5 = "sub_object5";
+    public static final String SUB5_STATUS = "sub_0bject5_status";
     public static final String SUB_OBJECT6 = "sub_object6";
+    public static final String SUB6_STATUS = "sub_0bject6_status";
     public static final String SUB_OBJECT7 = "sub_object7";
+    public static final String SUB7_STATUS = "sub_0bject7_status";
     public static final String SUB_OBJECT8 = "sub_object8";
+    public static final String SUB8_STATUS = "sub_0bject8_status";
 
 
     // 싱글톤 방식
-    private DBAdapter() {}
+    private DBAdapter() {
+        mDBHElper = new DBHelper(MyApplication.getAppContext());
+        Dao = new TableDao(mDB);
+        mDB = mDBHElper.getWritableDatabase();}
 
     public synchronized static DBAdapter getDBInstance() {
         if ( DBInstance == null ) {
@@ -61,18 +73,26 @@ public class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
             db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+"("+
                     "ID INTEGER PRIMARYKEY AUTOINCREMENT, "+
                     MAIN_OBJECT+" TEXT, "+
+                    MAIN_STATUS+" INTEGER DEFAULT 1,"+
                     SUB_OBJECT1+" TEXT, "+
+                    SUB1_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT2+" TEXT, "+
+                    SUB2_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT3+" TEXT, "+
+                    SUB3_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT4+" TEXT, "+
+                    SUB4_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT5+" TEXT, "+
+                    SUB5_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT6+" TEXT, "+
+                    SUB6_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT7+" TEXT, "+
-                    SUB_OBJECT8+" TEXT);");
+                    SUB7_STATUS+" INTEGER DEFAULT 1, "+
+                    SUB_OBJECT8+" TEXT,"+
+                    SUB1_STATUS+" INTEGER DEFAULT 1);");
             execSubDatabase(db, SUB_TABLE1);
             execSubDatabase(db, SUB_TABLE2);
             execSubDatabase(db, SUB_TABLE3);
@@ -104,20 +124,24 @@ public class DBAdapter {
         db.execSQL("CREATE TABLE IF NOT EXISTS "+tableName+"("+
                 "ID INTEGER PRIMARYKEY, "+
                 MAIN_OBJECT+" TEXT, "+
+                MAIN_STATUS+" INTEGER DEFAULT 1,"+
                 SUB_OBJECT1+" TEXT, "+
+                SUB1_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT2+" TEXT, "+
+                SUB2_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT3+" TEXT, "+
+                SUB3_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT4+" TEXT, "+
+                SUB4_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT5+" TEXT, "+
+                SUB5_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT6+" TEXT, "+
+                SUB6_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT7+" TEXT, "+
-                SUB_OBJECT8+" TEXT);");
+                SUB7_STATUS+" INTEGER DEFAULT 1, "+
+                SUB_OBJECT8+" TEXT,"+
+                SUB1_STATUS+" INTEGER DEFAULT 1);");
     }
-    }
-    public DBAdapter open(){
-        mDBHElper = new DBHelper(MyApplication.getAppContext());
-        mDB = mDBHElper.getWritableDatabase();
-        return this;
     }
     public void close(){
         mDB.close();
