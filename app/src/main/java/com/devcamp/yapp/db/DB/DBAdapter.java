@@ -33,6 +33,8 @@ public class DBAdapter {
     public static final String SUB_TABLE7 = "subTable";
     public static final String SUB_TABLE8 = "subTable";
 
+    public static final String TITLE = "title";
+    public static final String IMAGE = "image";
     public static final String MAIN_OBJECT = "main_object";
     public static final String MAIN_STATUS = "main_object_status";
     public static final String SUB_OBJECT1 = "sub_object1";
@@ -76,24 +78,26 @@ public class DBAdapter {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+" ("+
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                    MAIN_OBJECT+" TEXT, "+
+                    MAIN_OBJECT+" TEXT DEFAULT NULL, "+
                     MAIN_STATUS+" INTEGER DEFAULT 1,"+
-                    SUB_OBJECT1+" TEXT, "+
+                    SUB_OBJECT1+" TEXT DEFAULT NULL, "+
                     SUB1_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT2+" TEXT, "+
+                    SUB_OBJECT2+" TEXT DEFAULT NULL, "+
                     SUB2_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT3+" TEXT, "+
+                    SUB_OBJECT3+" TEXT DEFAULT NULL, "+
                     SUB3_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT4+" TEXT, "+
+                    SUB_OBJECT4+" TEXT DEFAULT NULL, "+
                     SUB4_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT5+" TEXT, "+
+                    SUB_OBJECT5+" TEXT DEFAULT NULL, "+
                     SUB5_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT6+" TEXT, "+
+                    SUB_OBJECT6+" TEXT DEFAULT NULL, "+
                     SUB6_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT7+" TEXT, "+
+                    SUB_OBJECT7+" TEXT DEFAULT NULL, "+
                     SUB7_STATUS+" INTEGER DEFAULT 1, "+
-                    SUB_OBJECT8+" TEXT,"+
-                    SUB8_STATUS+" INTEGER DEFAULT 1);");
+                    SUB_OBJECT8+" TEXT DEFAULT NULL,"+
+                    SUB8_STATUS+" INTEGER DEFAULT 1, "+
+                    TITLE+" TEXT  DEFAULT NULL"+
+                    IMAGE+"INTEGER);");
             execSubDatabase(db, SUB_TABLE1);
             execSubDatabase(db, SUB_TABLE2);
             execSubDatabase(db, SUB_TABLE3);
@@ -124,23 +128,23 @@ public class DBAdapter {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS "+tableName+"("+
                 "ID INTEGER PRIMARYKEY, "+
-                MAIN_OBJECT+" TEXT, "+
+                MAIN_OBJECT+" TEXT DEFAULT NULL, "+
                 MAIN_STATUS+" INTEGER DEFAULT 1,"+
-                SUB_OBJECT1+" TEXT, "+
+                SUB_OBJECT1+" TEXT DEFAULT NULL, "+
                 SUB1_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT2+" TEXT, "+
+                SUB_OBJECT2+" TEXT DEFAULT NULL, "+
                 SUB2_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT3+" TEXT, "+
+                SUB_OBJECT3+" TEXT DEFAULT NULL, "+
                 SUB3_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT4+" TEXT, "+
+                SUB_OBJECT4+" TEXT DEFAULT NULL, "+
                 SUB4_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT5+" TEXT, "+
+                SUB_OBJECT5+" TEXT DEFAULT NULL, "+
                 SUB5_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT6+" TEXT, "+
+                SUB_OBJECT6+" TEXT DEFAULT NULL, "+
                 SUB6_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT7+" TEXT, "+
+                SUB_OBJECT7+" TEXT DEFAULT NULL, "+
                 SUB7_STATUS+" INTEGER DEFAULT 1, "+
-                SUB_OBJECT8+" TEXT,"+
+                SUB_OBJECT8+" TEXT DEFAULT NULL,"+
                 SUB8_STATUS+" INTEGER DEFAULT 1);");
     }
     }
