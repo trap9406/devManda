@@ -56,8 +56,9 @@ public class DBAdapter {
     // 싱글톤 방식
     private DBAdapter() {
         mDBHElper = new DBHelper(MyApplication.getAppContext());
+        mDB = mDBHElper.getWritableDatabase();
         Dao = new TableDao(mDB);
-        mDB = mDBHElper.getWritableDatabase();}
+    }
 
     public synchronized static DBAdapter getDBInstance() {
         if ( DBInstance == null ) {
@@ -73,8 +74,8 @@ public class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+"("+
-                    "ID INTEGER PRIMARYKEY AUTOINCREMENT, "+
+            db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+" ("+
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     MAIN_OBJECT+" TEXT, "+
                     MAIN_STATUS+" INTEGER DEFAULT 1,"+
                     SUB_OBJECT1+" TEXT, "+
@@ -92,7 +93,7 @@ public class DBAdapter {
                     SUB_OBJECT7+" TEXT, "+
                     SUB7_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT8+" TEXT,"+
-                    SUB1_STATUS+" INTEGER DEFAULT 1);");
+                    SUB8_STATUS+" INTEGER DEFAULT 1);");
             execSubDatabase(db, SUB_TABLE1);
             execSubDatabase(db, SUB_TABLE2);
             execSubDatabase(db, SUB_TABLE3);
@@ -140,7 +141,7 @@ public class DBAdapter {
                 SUB_OBJECT7+" TEXT, "+
                 SUB7_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT8+" TEXT,"+
-                SUB1_STATUS+" INTEGER DEFAULT 1);");
+                SUB8_STATUS+" INTEGER DEFAULT 1);");
     }
     }
     public void close(){

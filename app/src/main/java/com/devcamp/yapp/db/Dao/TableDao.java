@@ -6,10 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.devcamp.yapp.db.DB.DBAdapter;
-import com.devcamp.yapp.db.DB.DataSources;
 import com.devcamp.yapp.db.Dto.TableDto;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +22,7 @@ public class TableDao {
 
     public TableDto getData(String table, int id){
         TableDto temp= null;
-        Cursor cursor = mDB.rawQuery("SELECT *FROM "+table+" WHERE id "+id+";",null);
+        Cursor cursor = mDB.rawQuery("SELECT *FROM "+table+" WHERE id ="+id+";",null);
         cursor.moveToFirst();
         Log.d("tag", cursor.getCount() + "");
         temp = new TableDto();
