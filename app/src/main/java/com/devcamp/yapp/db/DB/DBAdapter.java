@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.devcamp.yapp.db.Dao.TableDao;
+
 import javax.sql.DataSource;
 
 /**
@@ -16,33 +18,47 @@ public class DBAdapter {
     private static DBAdapter DBInstance;
     public static SQLiteDatabase mDB;
     public static DBHelper mDBHElper;
+    public static TableDao Dao;
 //테이블
     private static final String DATABASE_NAME = "DATABASE.db";
     private int DATABASE_VERSION = 1;
 
-    private static final String MAIN_TABLE = "mainTable";
-    private static final String SUB_TABLE1 = "subTable";
-    private static final String SUB_TABLE2 = "subTable";
-    private static final String SUB_TABLE3 = "subTable";
-    private static final String SUB_TABLE4 = "subTable";
-    private static final String SUB_TABLE5 = "subTable";
-    private static final String SUB_TABLE6 = "subTable";
-    private static final String SUB_TABLE7 = "subTable";
-    private static final String SUB_TABLE8 = "subTable";
+    public static final String MAIN_TABLE = "mainTable";
+    public static final String SUB_TABLE1 = "subTable";
+    public static final String SUB_TABLE2 = "subTable";
+    public static final String SUB_TABLE3 = "subTable";
+    public static final String SUB_TABLE4 = "subTable";
+    public static final String SUB_TABLE5 = "subTable";
+    public static final String SUB_TABLE6 = "subTable";
+    public static final String SUB_TABLE7 = "subTable";
+    public static final String SUB_TABLE8 = "subTable";
 
-    private static final String MAIN_OBJECT = "main_object";
-    private static final String SUB_OBJECT1 = "sub_object1";
-    private static final String SUB_OBJECT2 = "sub_object2";
-    private static final String SUB_OBJECT3 = "sub_object3";
-    private static final String SUB_OBJECT4 = "sub_object4";
-    private static final String SUB_OBJECT5 = "sub_object5";
-    private static final String SUB_OBJECT6 = "sub_object6";
-    private static final String SUB_OBJECT7 = "sub_object7";
-    private static final String SUB_OBJECT8 = "sub_object8";
+    public static final String MAIN_OBJECT = "main_object";
+    public static final String MAIN_STATUS = "main_object_status";
+    public static final String SUB_OBJECT1 = "sub_object1";
+    public static final String SUB1_STATUS = "sub_0bject1_status";
+    public static final String SUB_OBJECT2 = "sub_object2";
+    public static final String SUB2_STATUS = "sub_0bject2_status";
+    public static final String SUB_OBJECT3 = "sub_object3";
+    public static final String SUB3_STATUS = "sub_0bject3_status";
+    public static final String SUB_OBJECT4 = "sub_object4";
+    public static final String SUB4_STATUS = "sub_0bject4_status";
+    public static final String SUB_OBJECT5 = "sub_object5";
+    public static final String SUB5_STATUS = "sub_0bject5_status";
+    public static final String SUB_OBJECT6 = "sub_object6";
+    public static final String SUB6_STATUS = "sub_0bject6_status";
+    public static final String SUB_OBJECT7 = "sub_object7";
+    public static final String SUB7_STATUS = "sub_0bject7_status";
+    public static final String SUB_OBJECT8 = "sub_object8";
+    public static final String SUB8_STATUS = "sub_0bject8_status";
 
 
     // 싱글톤 방식
-    private DBAdapter() {}
+    private DBAdapter() {
+        mDBHElper = new DBHelper(MyApplication.getAppContext());
+        mDB = mDBHElper.getWritableDatabase();
+        Dao = new TableDao(mDB);
+    }
 
     public synchronized static DBAdapter getDBInstance() {
         if ( DBInstance == null ) {
@@ -58,18 +74,26 @@ public class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
-            db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+"("+
-                    "ID INTEGER PRIMARYKEY AUTOINCREMENT, "+
+            db.execSQL("CREATE TABLE IF NOT EXISTS "+MAIN_TABLE+" ("+
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
                     MAIN_OBJECT+" TEXT, "+
+                    MAIN_STATUS+" INTEGER DEFAULT 1,"+
                     SUB_OBJECT1+" TEXT, "+
+                    SUB1_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT2+" TEXT, "+
+                    SUB2_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT3+" TEXT, "+
+                    SUB3_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT4+" TEXT, "+
+                    SUB4_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT5+" TEXT, "+
+                    SUB5_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT6+" TEXT, "+
+                    SUB6_STATUS+" INTEGER DEFAULT 1, "+
                     SUB_OBJECT7+" TEXT, "+
-                    SUB_OBJECT8+" TEXT);");
+                    SUB7_STATUS+" INTEGER DEFAULT 1, "+
+                    SUB_OBJECT8+" TEXT,"+
+                    SUB8_STATUS+" INTEGER DEFAULT 1);");
             execSubDatabase(db, SUB_TABLE1);
             execSubDatabase(db, SUB_TABLE2);
             execSubDatabase(db, SUB_TABLE3);
@@ -101,67 +125,27 @@ public class DBAdapter {
         db.execSQL("CREATE TABLE IF NOT EXISTS "+tableName+"("+
                 "ID INTEGER PRIMARYKEY, "+
                 MAIN_OBJECT+" TEXT, "+
+                MAIN_STATUS+" INTEGER DEFAULT 1,"+
                 SUB_OBJECT1+" TEXT, "+
+                SUB1_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT2+" TEXT, "+
+                SUB2_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT3+" TEXT, "+
+                SUB3_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT4+" TEXT, "+
+                SUB4_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT5+" TEXT, "+
+                SUB5_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT6+" TEXT, "+
+                SUB6_STATUS+" INTEGER DEFAULT 1, "+
                 SUB_OBJECT7+" TEXT, "+
-                SUB_OBJECT8+" TEXT);");
+                SUB7_STATUS+" INTEGER DEFAULT 1, "+
+                SUB_OBJECT8+" TEXT,"+
+                SUB8_STATUS+" INTEGER DEFAULT 1);");
     }
-    }
-    public DBAdapter open(){
-        mDBHElper = new DBHelper(MyApplication.getAppContext());
-        mDB = mDBHElper.getWritableDatabase();
-        return this;
     }
     public void close(){
         mDB.close();
         mDBHElper.close();
-    }
-    public DataSources getData(String table, int id){
-        DataSources temp= null;
-        Cursor cursor = mDB.rawQuery("SELECT *FROM "+table+" WHERE id "+id+";",null);
-        cursor.moveToFirst();
-        Log.d("tag", cursor.getCount() + "");
-        temp = new DataSources();
-
-        if(cursor.getCount() == 0){
-            return temp;
-        }
-        temp.setId(cursor.getInt(0));
-        temp.setMainText(cursor.getString(1));
-        temp.setSubText1(cursor.getString(2));
-        temp.setSubText2(cursor.getString(3));
-        temp.setSubText3(cursor.getString(4));
-        temp.setSubText4(cursor.getString(5));
-        temp.setSubText5(cursor.getString(6));
-        temp.setSubText6(cursor.getString(7));
-        temp.setSubText7(cursor.getString(8));
-        temp.setSubText8(cursor.getString(9));
-
-        return temp;
-    }
-    public void insertData(String table, String m, String s1, String s2, String s3, String s4,
-                                  String s5, String s6, String s7, String s8){
-        ContentValues cv = new ContentValues();
-
-        cv.put(MAIN_OBJECT, m);
-        cv.put(SUB_OBJECT1, s1);
-        cv.put(SUB_OBJECT2, s2);
-        cv.put(SUB_OBJECT3, s3);
-        cv.put(SUB_OBJECT4, s4);
-        cv.put(SUB_OBJECT5, s5);
-        cv.put(SUB_OBJECT6, s6);
-        cv.put(SUB_OBJECT7, s7);
-        cv.put(SUB_OBJECT8, s8);
-
-        mDB.insert(table, null, cv);
-    }
-
-    public Cursor getAllUser(String table) {
-        Cursor all = mDB.query(table, null, null, null, null, null, null);
-        return all;
     }
 }
